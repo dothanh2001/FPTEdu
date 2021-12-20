@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+{{> head}}
+<body>
+{{> trainerLayout}}
+    <main class="content-detail" id="">
+        <a href="/trainer/assignedCourse" type="button" class="btn btn-link fs-5">
+            <i class="bi bi-arrow-return-left" style="margin-right: 5px;"></i>Back
+        </a>
+        <div class="content-detail-header mt-4">
+            <form action="" class="content-detail-header-search">
+                <input type="search" class="form-control" placeholder="Search by name..." aria-label="Recipient's username" aria-describedby="basic-addon2">
+                <button style="width: 90px;" class="btn btn-primary" type="submit"><i class="bi bi-search"></i></button>
+            </form>
+        </div>
+           <div class="trainees-table card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">List Traniee in Class {{class_name}}</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">STT</th>
+                                            <th scope="col">Email</th>
+                                            <th scope="col">Image</th>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Code</th>
+                                            <th scope="col">Education</th>
+                                            <th scope="col">Grade</th>
+                                            <th scope="col">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {{#each data}} 
+                                        <tr>
+                                            <th scope="row">{{@index}}</th>
+                                            <th scope="col">{{this.email}}</th>
+                                            <th scope="col">
+                                            </th>
+                                            <th scope="col">{{this.name}}</th>
+                                            <th id='traine_code' scope="col">{{this.code}}</th>
+                                            <th scope="col">{{this.education}}</th>
+                                            <th scope="col">{{this.grade}}</th>
+                                            <th scope="col">
+                                            <button type="button" id="viewTranieeStatus" style="display: inline-block;" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editStatus">
+                                            <i class="bi bi-pen"></i>  Check Status
+                                            </button>
+                                        </tr>
+                                        {{/each}}
+                                        <span id="course_id">{{courseId}}</span>
+                                    </tbody>
+                                     <tfoot>
+                                        <tr>
+                                            <th scope="col">STT</th>
+                                            <th scope="col">Email</th>
+                                            <th scope="col">Image</th>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Code</th>
+                                            <th scope="col">Education</th>
+                                            <th scope="col">Action</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+    </main>
+    <!-- Button trigger modal -->
+<!-- Modal -->
+<div class="modal fade" id="editStatus" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true"></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+{{> bottom}}
+<script>
+    $(document).ready(function(){
+        $("#viewTranieeStatus").click(function(){
+            console.log(document);
+            var traineeCode = $('#traine_code').html();
+            var courseId = $('#course_id').html();
+            $.get("http://localhost:5000/trainer/assignedCourse/viewTraineeStatus",
+            {
+                traineeCode: traineeCode,
+                courseId: courseId
+            },
+            (data,status)=>{
+                console.log(data);
+            })
+        })
+    })
+</script>
+</html>

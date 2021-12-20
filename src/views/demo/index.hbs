@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+{{> head}}
+<body>
+    <div class="container">
+        <a href="/demo/create" class="btn btn-primary mt-5">Add Category</a>
+        
+        <form action="/demo/search" method="GET">
+            <input type="search" name="q" id="">
+            <input type="submit" value="Search">
+        </form>
+
+        <table class="table mt-4">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Image</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each data}}
+                <tr>
+                    <th scope="row">{{@index}}</th>
+                    <td>
+                        <img style="width: 200px; height: 200px;" src="data:image/{{this.image.contentType}};base64,{{convertImage this.image.data}}" alt="">
+                    </td>
+                    <td>{{this.name}}</td>
+                    <td>{{this.description}}</td>
+                    <td>
+                        <a class="btn btn-link" href="/demo/edit?id={{this._id}}">Edit</a>
+                        <a class="btn btn-link" href="/demo/delete?id={{this._id}}">Delete</a>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+{{> bottom}}
+</body>
+</html>
